@@ -1,0 +1,57 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  max-width: 600px;
+  width: 100%;
+  padding-top: 24px;
+  flex-grow: 1;
+  gap: 24px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 12px;
+  padding-block: 12px;
+}
+
+.button {
+  cursor: pointer;
+  font-size: 40px;
+  background: transparent;
+  border: none;
+}
+
+.list {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin: 0;
+  list-style: none;
+  padding-inline: 0;
+}
+
+.listItem {
+  font-size: 18px;
+  content-visibility: auto;
+
+  & + & {
+    margin-top: 12px;
+  }
+}
+
+.isCaption {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding-block: 12px;
+  background: var(--background);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.sentinel {
+  height: 100px;
+}
