@@ -1,0 +1,41 @@
+.link {
+  color: light-dark(#3f51b5, #ffc107);
+
+  &:hover {
+    color: light-dark(#3645a6, #b38600);
+  }
+}
+
+.linkWrapper {
+  margin-bottom: 24px;
+}
+
+.root {
+  align-self: center;
+  max-width: 600px;
+  width: 100%;
+  padding-top: 24px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.headerInfo {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 24px;
+  font-weight: bold;
+}
