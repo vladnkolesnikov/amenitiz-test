@@ -58,14 +58,15 @@ export const LastSeen = ({ ts }: { ts: number }) => {
   const [lastSeen, setLastSeen] = useState(() => formatLastSeen(ts))
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const time = formatLastSeen(ts)
-      setLastSeen(time)
-    }, 1000)
-
-    return () => {
-      clearInterval(intervalId)
+    function update() {
+      return requestAnimationFrame(() => {
+        const time = formatLastSeen(ts)
+        setLastSeen(time)
+        update()
+      })
     }
+
+    update()
   }, [ts])
 
   return <time>Last seen: {lastSeen}</time>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
@@ -11,8 +11,14 @@ type Props = {
   maxItems?: number
 }
 
+enum SortOder {
+  Asc,
+  Desc,
+}
+
 export const Players = ({ items, maxItems = 15 }: Props) => {
   const searchParams = useSearchParams()
+  const [sortOrder, setSortOrder] = useState(SortOder.Desc)
   const [page, setPage] = useState(Number(searchParams.get('page') ?? 0))
   const totalPages = useMemo(
     () => Math.ceil(items.length / maxItems),
@@ -21,9 +27,20 @@ export const Players = ({ items, maxItems = 15 }: Props) => {
 
   const itemsWindow = page * maxItems + maxItems
 
+  const handleSortButtonClick = useCallback(() => {
+    setSortOrder((prevState) =>
+      prevState === SortOder.Desc ? SortOder.Asc : SortOder.Desc
+    )
+  }, [])
+
   const itemsToDisplay = useMemo(
-    () => items.slice(page * maxItems, itemsWindow),
-    [items, page, maxItems, itemsWindow]
+    () =>
+      items
+        .toSorted((a, b) =>
+          sortOrder === SortOder.Asc ? b.localeCompare(a) : a.localeCompare(b)
+        )
+        .slice(page * maxItems, itemsWindow),
+    [items, page, maxItems, itemsWindow, sortOrder]
   )
 
   const hasNextPage = useMemo(
@@ -39,6 +56,11 @@ export const Players = ({ items, maxItems = 15 }: Props) => {
 
   return (
     <div className={styles.root}>
+      <header>
+        <button onClick={handleSortButtonClick} type="button">
+          {sortOrder === SortOder.Desc ? 'A > Z' : 'Z > A'}
+        </button>
+      </header>
       <ul className={styles.list}>
         {itemsToDisplay.map((item) => (
           <li className={styles.listItem} key={item}>
